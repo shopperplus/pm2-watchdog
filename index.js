@@ -156,7 +156,10 @@ function startOrRestartWatchdog(pm2Env) {
         watchedUrl: watchedUrl,
         checkingInterval: moduleConfig.checking_interval * 1000,
         failsToRestart: moduleConfig.fails_to_restart,
-        checkingTimeout: moduleConfig.checking_timeout
+        checkingTimeout: moduleConfig.checking_timeout,
+        auth: moduleConfig.auth,
+        username: moduleConfig.username,
+        password: moduleConfig.password
     });
     // Store new watchdog to watchdogs list
     watchdogs.set(pm2Env.pm_id, watchdog);
