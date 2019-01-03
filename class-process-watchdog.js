@@ -120,13 +120,17 @@ class ProcessWatchdog {
                 var timeout = parseInt(this.options.checkingTimeout || 15000);
                 console.trace(`Process ${this.name} - webserver checking executed timeout ${timeout}`);
 
+                var headers = {}
+                headers['User-Agent'] = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) GSA/65.0.225212226 Mobile/15E148 Safari/605.1 PM2 Healthcheck"
+                if(this.options.auth){
+                    headers['Authorization'] = "Basic " + new Buffer(this.options.username + ":" + this.options.password).toString("base64");
+                }
+
                 rp({
                     uri: this.options.watchedUrl,
                     method: "GET",
                     timeout:timeout,
-                    headers: {
-                        'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) GSA/65.0.225212226 Mobile/15E148 Safari/605.1 PM2 Healthcheck"
-                    }
+                    headers: headers
                 }).then(() => {
                     this.failsCountInRow = 0;
                     console.debug(`Process ${this.name} - webserver response ok`);
