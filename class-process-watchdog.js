@@ -125,7 +125,7 @@ class ProcessWatchdog {
                     method: "GET",
                     timeout:timeout,
                     headers: {
-                        'User-Agent': "PM2 Healthcheck"
+                        'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) GSA/65.0.225212226 Mobile/15E148 Safari/605.1 PM2 Healthcheck"
                     }
                 }).then(() => {
                     this.failsCountInRow = 0;
