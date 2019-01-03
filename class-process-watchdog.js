@@ -4,7 +4,7 @@
 // Dependencies
 const rp = require('request-promise');
 const pm2 = require('pm2');
-
+const request = require('request');
 
 /**
  * Checks the webserver of specified PM2 process and restart it when no response or error.
@@ -110,7 +110,7 @@ class ProcessWatchdog {
             const processUptime = (new Date().getTime()) - processDescription.pm2_env.created_at;
             const executeWatchdogAfter = Math.max(processDescription.pm2_env.min_uptime - processUptime, parseInt(this.options.checkingInterval), 1000);
             console.trace(`Process ${this.name} - next checking after ${(executeWatchdogAfter/1000).toFixed(0)}s`);
-
+            const j = request.jar();
             // Plan the next execution
             this.timeoutId = setTimeout(() => {
                 this.timeoutId = null;
@@ -130,7 +130,8 @@ class ProcessWatchdog {
                     uri: this.options.watchedUrl,
                     method: "GET",
                     timeout:timeout,
-                    headers: headers
+                    headers: headers,
+                    jar: j
                 }).then(() => {
                     this.failsCountInRow = 0;
                     console.debug(`Process ${this.name} - webserver response ok`);
