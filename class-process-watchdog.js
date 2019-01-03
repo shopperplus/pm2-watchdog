@@ -123,7 +123,7 @@ class ProcessWatchdog {
                 var headers = {}
                 headers['User-Agent'] = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) GSA/65.0.225212226 Mobile/15E148 Safari/605.1 PM2 Healthcheck"
                 if(this.options.auth){
-                    headers['Authorization'] = "Basic " + new Buffer(this.options.username + ":" + this.options.password).toString("base64");
+                    headers['Authorization'] = "Basic " + Buffer.from(this.options.username + ":" + this.options.password).toString("base64");
                 }
 
                 rp({
