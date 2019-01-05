@@ -150,7 +150,7 @@ class ProcessWatchdog {
 
                     // Process restart
                     return new Promise((resolve, reject) => {
-                        pm2.restart(this.pm_id, (err) => {
+                        pm2.restart(this.name, (err) => {
                             if (err) {
                                 console.error(`Process ${this.name} - restart failed. ${err.message || err}`);
                                 reject(err);

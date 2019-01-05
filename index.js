@@ -149,7 +149,7 @@ function startOrRestartWatchdog(pm2Env) {
 
     removeWatchdog(pm2Env);
 
-    let watchdog = watchdogs.get(pm2Env.pm_id);
+    let watchdog = watchdogs.get(pm2Env.name);
 
     // Create the new watchdog of new process
     watchdog = new ProcessWatchdog(pm2Env, {
@@ -162,7 +162,7 @@ function startOrRestartWatchdog(pm2Env) {
         password: moduleConfig.password
     });
     // Store new watchdog to watchdogs list
-    watchdogs.set(pm2Env.pm_id, watchdog);
+    watchdogs.set(pm2Env.name, watchdog);
     // Start watchdog
     watchdog.start();
 }
@@ -172,9 +172,9 @@ function startOrRestartWatchdog(pm2Env) {
  * @param {Pm2Env} pm2Env
  */
 function removeWatchdog(pm2Env) {
-    const watchdog = watchdogs.get(pm2Env.pm_id);
+    const watchdog = watchdogs.get(pm2Env.name);
     if (watchdog) {
-        watchdogs.delete(pm2Env.pm_id);
+        watchdogs.delete(pm2Env.name);
         watchdog.stop();
     } else {
         console.trace(`Process ${pm2Env.name} - no watchdog exists for removal`);
